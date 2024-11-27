@@ -14,12 +14,12 @@ def load_structure(pdb_file):
 
 
 def generate_contact_map(structure, distance_threshold=8.0):
-    # Lista współrzędnych atomów CA
+  
     ca_coords = []
     for model in structure:
         for chain in model:
             for residue in chain:
-                if 'CA' in residue:  # Sprawdź, czy jest atom C-alpha
+                if 'CA' in residue: 
                     ca_coords.append(residue['CA'].get_coord())
     
     n = len(ca_coords)
@@ -27,11 +27,11 @@ def generate_contact_map(structure, distance_threshold=8.0):
 
 
     for i in range(n):
-        for j in range(i + 1, n):  # Liczymy tylko nad diagonalą
+        for j in range(i + 1, n):  
             distance = calc_distance(ca_coords[i], ca_coords[j])
             if distance <= distance_threshold:
                 contact_map[i, j] = 1
-                contact_map[j, i] = 1  # Macierz symetryczna
+                contact_map[j, i] = 1  
     
     return contact_map
 
@@ -46,7 +46,7 @@ def plot_contact_map(contact_map):
     plt.show()
 
 
-pdb_file = "C:/politechnika/semestr 5 bioinformatyka/bioinformatyka strukturalna-lab/4ywo (2).pdb"  # Podaj ścieżkę do pliku PDB
+pdb_file = "C:/politechnika/semestr 5 bioinformatyka/bioinformatyka strukturalna-lab/4ywo (2).pdb"  
 structure = load_structure(pdb_file)
 
 contact_map = generate_contact_map(structure, distance_threshold=8.0)
